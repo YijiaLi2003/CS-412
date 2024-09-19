@@ -1,0 +1,10 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+    <div>
+        <h2>Quote:</h2>
+        <p>{{ quote }}</p>
+        <h3>Image:</h3>
+        <img src="{{ image }}" alt="Famous Person">
+    </div>
+{% endblock %}
