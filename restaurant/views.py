@@ -4,8 +4,8 @@ import random
 import datetime
 from django.utils import timezone 
 
-def restaurant(request):
-    return render(request, 'restaurant/restaurant.html')
+def main(request):
+    return render(request, 'restaurant/main.html')
 
 def order(request):
     daily_specials = [

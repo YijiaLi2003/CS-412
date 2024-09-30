@@ -4,8 +4,8 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('', views.restaurant, name='restaurant'),
-    path('restaurant/', views.restaurant, name='restaurant'),
+    path(r'', views.main, name='main'),
+    path(r'main', views.main, name='main'),
     path('order/', views.order, name='order'),
-    path('confirmation/', views.confirmation, name='confirmation'),
+    path(r'confirmation', views.confirmation, name='confirmation'),
 ]
