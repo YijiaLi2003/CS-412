@@ -1,0 +1,57 @@
+<!-- restaurant/templates/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2>Order Online</h2>
+
+<form action="{% url 'confirmation' %}" method="post">
+    {% csrf_token %}
+    <h3>Menu Items</h3>
+    <label>
+        <input type="checkbox" name="items" value="Burger|8.99">
+        Burger ($8.99)
+    </label><br>
+    <label>
+        <input type="checkbox" name="items" value="Pizza|12.99">
+        Pizza ($12.99)
+    </label><br>
+    <label>
+        <input type="checkbox" name="items" value="Salad|6.99">
+        Salad ($6.99)
+    </label><br>
+    <label>
+        <input type="checkbox" name="items" value="{{ daily_special.name }}|{{ daily_special.price }}">
+        Today's Special: {{ daily_special.name }} (${{ daily_special.price }})
+    </label><br>
+
+    <h4>Pizza Toppings ($1.00 each):</h4>
+    <label>
+        <input type="checkbox" name="toppings" value="Pepperoni">
+        Pepperoni
+    </label><br>
+    <label>
+        <input type="checkbox" name="toppings" value="Mushrooms">
+        Mushrooms
+    </label><br>
+    <label>
+        <input type="checkbox" name="toppings" value="Onions">
+        Onions
+    </label><br>
+
+    <h3>Special Instructions</h3>
+    <textarea name="instructions" rows="4" cols="50"></textarea><br>
+
+    <h3>Customer Information</h3>
+    <label>
+        Name: <input type="text" name="customer_name" required>
+    </label><br>
+    <label>
+        Phone: <input type="tel" name="customer_phone" required>
+    </label><br>
+    <label>
+        Email: <input type="email" name="customer_email" required>
+    </label><br><br>
+
+    <input type="submit" value="Place Order">
+</form>
+{% endblock %}

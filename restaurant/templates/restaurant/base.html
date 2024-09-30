@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Restaurant</title>
+    <link rel="stylesheet" href="https://cs-people.bu.edu/lyj666/styles4.css">
+</head>
+<body>
+    <header>
+        <h1>My Restaurant</h1>
+        <nav>
+            <a href="{% url 'restaurant' %}">Home</a>
+            <a href="{% url 'order' %}">Order Online</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>page created by lyj666@bu.edu</p>
+    </footer>
+</body>
+</html>

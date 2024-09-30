@@ -1,0 +1,17 @@
+<!-- restaurant/templates/restaurant/restaurant.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2>Welcome to My Restaurant!</h2>
+<p>Location: 123 Main Street, Anytown</p>
+
+<h3>Hours of Operation</h3>
+<table>
+    <tr><th>Day</th><th>Hours</th></tr>
+    <tr><td>Monday - Friday</td><td>10 AM - 10 PM</td></tr>
+    <tr><td>Saturday</td><td>11 AM - 11 PM</td></tr>
+    <tr><td>Sunday</td><td>Closed</td></tr>
+</table>
+
+<img src="https://www.bostonmagazine.com/wp-content/uploads/sites/2/2022/11/fresh-boston-900px.jpg" alt="Restaurant Photo">
+{% endblock %}
