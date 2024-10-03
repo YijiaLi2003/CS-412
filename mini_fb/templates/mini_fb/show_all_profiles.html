@@ -1,0 +1,27 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>All Profiles</h2>
+<table border="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>City</th>
+        <th>Profile Image</th>
+    </tr>
+    {% for profile in profiles %}
+    <tr>
+        <td>{{ profile.first_name }}</td>
+        <td>{{ profile.last_name }}</td>
+        <td>{{ profile.city }}</td>
+        <td>
+            {% if profile.profile_image_url %}
+            <img src="{{ profile.profile_image_url }}" alt="Profile Image" width="100">
+            {% else %}
+            N/A
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

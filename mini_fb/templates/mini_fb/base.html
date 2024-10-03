@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Facebook</title>
+    <link rel="stylesheet" href="https://cs-people.bu.edu/lyj666/styles4.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Mini Facebook</h1>
+        <nav>
+            <a href="{% url 'show_all_profiles' %}">Profiles</a>
+            
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <p>&copy; 2023 Mini Facebook</p>
+    </footer>
+</body>
+</html>

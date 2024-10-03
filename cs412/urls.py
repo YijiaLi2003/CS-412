@@ -25,5 +25,6 @@ urlpatterns = [
                                      ## and associate it with URLs in another file
     path("quotes/", include("quotes.urls")),
     path("restaurant/", include('restaurant.urls')),
+    path("mini_fb/", include('mini_fb.urls')),
 ] + static(settings.STATIC_URL,
            document_root=settings.STATIC_ROOT)
