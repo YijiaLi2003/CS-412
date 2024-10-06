@@ -14,7 +14,7 @@ body {
 
 /* Header Styling */
 header {
-    background-color: #4267B2; /* Facebook Blue */
+    background-color: #4267B2; 
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -132,7 +132,6 @@ footer {
     }
 }
 
-/* Button Styling (Optional for Future Features) */
 button, .button {
     background-color: #4267B2;
     color: #fff;
