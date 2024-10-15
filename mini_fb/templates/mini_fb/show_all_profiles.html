@@ -1,3 +1,5 @@
+<!-- templates/mini_fb/show_all_profiles.html -->
+
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
@@ -11,12 +13,14 @@
     </tr>
     {% for profile in profiles %}
     <tr>
-        <td>{{ profile.first_name }}</td>
-        <td>{{ profile.last_name }}</td>
+        <td><a href="{% url 'show_profile' profile.pk %}">{{ profile.first_name }}</a></td>
+        <td><a href="{% url 'show_profile' profile.pk %}">{{ profile.last_name }}</a></td>
         <td>{{ profile.city }}</td>
         <td>
             {% if profile.profile_image_url %}
-            <img src="{{ profile.profile_image_url }}" alt="Profile Image" width="100">
+            <a href="{% url 'show_profile' profile.pk %}">
+                <img src="{{ profile.profile_image_url }}" alt="Profile Image" width="100">
+            </a>
             {% else %}
             N/A
             {% endif %}

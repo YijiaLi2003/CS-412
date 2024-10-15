@@ -1,3 +1,5 @@
+<!-- templates/mini_fb/base.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +10,8 @@
     <header>
         <h1>Welcome to Mini Facebook</h1>
         <nav>
-            <a href="{% url 'show_all_profiles' %}">Profiles</a>
-            
+            <a href="{% url 'show_all_profiles' %}">Profiles</a> |
+            <a href="{% url 'create_profile' %}">Create New Profile</a>
         </nav>
     </header>
 

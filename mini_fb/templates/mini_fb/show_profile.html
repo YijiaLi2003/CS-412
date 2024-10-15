@@ -1,0 +1,31 @@
+<!-- templates/mini_fb/show_profile.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+<img src="{{ profile.profile_image_url }}" alt="Profile Image" width="200">
+
+<p><strong>City:</strong> {{ profile.city }}</p>
+<p><strong>Email:</strong> {{ profile.email_address }}</p>
+
+<h3>Status Messages</h3>
+<ul>
+    {% for status in profile.status_messages.all %}
+    <li>
+        <strong>{{ status.timestamp|date:"Y-m-d H:i" }}</strong>: {{ status.message }}
+    </li>
+    {% empty %}
+    <li>No status messages.</li>
+    {% endfor %}
+</ul>
+
+<h3>Post a New Status Message</h3>
+<form method="post" action="{% url 'create_status' profile.pk %}">
+    {% csrf_token %}
+    {{ status_form.as_p }}
+    <button type="submit">Post Status</button>
+</form>
+
+<a href="{% url 'show_all_profiles' %}">Back to Profiles</a>
+{% endblock %}
