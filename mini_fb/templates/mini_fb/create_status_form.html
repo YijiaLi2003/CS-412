@@ -5,11 +5,19 @@
 {% block content %}
 <h2>Post a Status Message for {{ profile.first_name }} {{ profile.last_name }}</h2>
 
-<form method="post" action="{% url 'create_status' profile.pk %}">
+<form method="post" action="{% url 'create_status' profile.pk %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    <p>
+        <label>
+            Upload Image(s):
+            <input type="file" name="files" multiple>
+        </label>
+    </p>
+    
     <button type="submit">Post Status</button>
 </form>
+
 
 <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
 {% endblock %}

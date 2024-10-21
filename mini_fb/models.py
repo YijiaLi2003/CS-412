@@ -25,4 +25,15 @@ class StatusMessage(models.Model):
         return f"StatusMessage(pk={self.pk}, profile={self.profile}, timestamp={self.timestamp})"
 
     class Meta:
-        ordering = ['-timestamp']  
+        ordering = ['-timestamp']
+
+    def get_images(self):
+        return self.images.all()
+
+class Image(models.Model):
+    image_file = models.ImageField(upload_to='images/')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status_message = models.ForeignKey(StatusMessage, on_delete=models.CASCADE, related_name='images')
+
+    def __str__(self):
+        return f"Image(pk={self.pk}, status_message={self.status_message.pk})"

@@ -9,11 +9,28 @@
 <p><strong>City:</strong> {{ profile.city }}</p>
 <p><strong>Email:</strong> {{ profile.email_address }}</p>
 
+<p>
+    <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+</p>
+
 <h3>Status Messages</h3>
 <ul>
     {% for status in profile.status_messages.all %}
     <li>
         <strong>{{ status.timestamp|date:"Y-m-d H:i" }}</strong>: {{ status.message }}
+        {% if status.get_images %}
+        <ul>
+            {% for img in status.get_images %}
+            <li>
+                <img src="{{ img.image_file.url }}" alt="Status Image" style="max-width: 200px;">
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <p>
+            <a href="{% url 'update_status' status.pk %}">Update</a> |
+            <a href="{% url 'delete_status' status.pk %}">Delete</a>
+        </p>
     </li>
     {% empty %}
     <li>No status messages.</li>
@@ -21,11 +38,19 @@
 </ul>
 
 <h3>Post a New Status Message</h3>
-<form method="post" action="{% url 'create_status' profile.pk %}">
+<form method="post" action="{% url 'create_status' profile.pk %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ status_form.as_p }}
+    <p>
+        <label>
+            Upload Image(s):
+            <input type="file" name="files" multiple>
+        </label>
+    </p>
+    
     <button type="submit">Post Status</button>
 </form>
+
 
 <a href="{% url 'show_all_profiles' %}">Back to Profiles</a>
 {% endblock %}

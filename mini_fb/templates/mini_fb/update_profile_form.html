@@ -1,0 +1,28 @@
+<!-- templates/mini_fb/update_profile_form.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>Update Profile for {{ profile.first_name }} {{ profile.last_name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        {{ form.city.label_tag }}
+        {{ form.city }}
+    </div>
+    <div>
+        {{ form.email_address.label_tag }}
+        {{ form.email_address }}
+    </div>
+    <div>
+        {{ form.profile_image_url.label_tag }}
+        {{ form.profile_image_url }}
+    </div>
+    <button type="submit">Update Profile</button>
+</form>
+
+
+
+<a href="{% url 'show_profile' profile.pk %}">Cancel</a>
+{% endblock %}
