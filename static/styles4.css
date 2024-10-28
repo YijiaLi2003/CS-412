@@ -1,177 +1,43 @@
-/* Reset default margins and paddings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Global Styles */
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    line-height: 1.6;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Header Styles */
-header {
-    background-color: #4267B2; /* Facebook Blue */
-    color: #ffffff;
-    padding: 20px 0;
-    border-bottom: 3px solid #29487d;
-}
-
-header h1 {
-    text-align: center;
-    margin: 0;
-    font-size: 2.5em;
-}
-
-header nav {
-    text-align: center;
-    margin-top: 15px;
-}
-
-header nav a {
-    color: #ffffff;
-    margin: 0 15px;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-header nav a:hover {
-    color: #dfe3ee;
-}
-
-/* Main Content Styles */
-main {
-    padding: 20px;
-    max-width: 960px;
-    margin: 0 auto;
+/* Friend Suggestions */
+.friend-suggestion {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
     background-color: #ffffff;
 }
 
-h2, h3 {
-    margin-bottom: 15px;
-    color: #333;
-}
-
-p {
-    margin-bottom: 15px;
-}
-
-.profile-details {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.profile-details img {
+.friend-suggestion img.profile-thumb {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    margin-bottom: 20px;
-    width: 150px;
-    height: 150px;
     object-fit: cover;
+    margin-right: 20px;
 }
 
-/* Buttons */
-.button {
-    display: inline-block;
-    background-color: #4267B2;
-    color: #ffffff;
-    padding: 10px 25px;
-    margin-top: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.friend-info {
+    display: flex;
+    flex-direction: column;
 }
 
-.button:hover {
-    background-color: #29487d;
+.friend-info a {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #4267B2;
 }
 
-.button-secondary {
-    background-color: #e4e6eb;
-    color: #050505;
+.friend-info .button {
+    width: fit-content;
 }
 
-.button-secondary:hover {
-    background-color: #ccd0d5;
+/* News Feed */
+.news-feed {
+    list-style-type: none;
+    padding: 0;
 }
 
-/* Form Styles */
-form {
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccd0d5;
-    border-radius: 6px;
-    background-color: #f0f2f5;
-}
-
-form input[type="submit"],
-form button[type="submit"] {
-    background-color: #4267B2;
-    color: #ffffff;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-form input[type="submit"]:hover,
-form button[type="submit"]:hover {
-    background-color: #29487d;
-}
-
-/* Table Styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table thead {
-    background-color: #f0f2f5;
-}
-
-table, th, td {
-    border: 1px solid #dddfe2;
-}
-
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-
-th {
-    background-color: #f5f6f7;
-}
-
-/* Status Messages */
 .status-message {
     border: 1px solid #dddfe2;
     padding: 15px;
@@ -180,32 +46,58 @@ th {
     background-color: #ffffff;
 }
 
-.status-message h4 {
+.status-header {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+}
+
+.status-header img.profile-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.status-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-info a {
     font-size: 1.2em;
     color: #4267B2;
 }
 
-.status-message p {
-    margin-bottom: 10px;
-    font-size: 1em;
-}
-
-.status-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.status-info .timestamp {
+    font-size: 0.9em;
+    color: #666;
 }
 
 .status-images img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    max-width: 400px;
     border-radius: 6px;
-    width: 200px;
+    margin-top: 10px;
 }
 
-.status-actions {
+/* Update button styles to be more visible */
+.button {
+    display: inline-block;
+    background-color: #4267B2;
+    color: #ffffff;
+    padding: 10px 20px;
     margin-top: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #29487d;
+    text-decoration: none;
 }
 
 .status-actions a {
@@ -219,39 +111,16 @@ th {
     color: #29487d;
 }
 
-/* Footer Styles */
-footer {
-    background-color: #4267B2;
-    color: #ffffff;
+/* Profile Details */
+.profile-details {
     text-align: center;
-    padding: 15px 0;
-    margin-top: 40px;
+    margin-bottom: 30px;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.8em;
-    }
-
-    header nav a {
-        display: block;
-        margin: 10px 0;
-    }
-
-    .button,
-    form input[type="submit"],
-    form button[type="submit"] {
-        width: 100%;
-        text-align: center;
-    }
-
-    .profile-details img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .status-images img {
-        width: 100%;
-    }
+.profile-details img {
+    border-radius: 50%;
+    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }
