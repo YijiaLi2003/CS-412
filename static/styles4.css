@@ -1,3 +1,101 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #4267B2;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #29487d;
+}
+
+.button {
+    display: inline-block;
+    background-color: #4267B2;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #29487d;
+    text-decoration: none;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddfe2;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    color: #4267B2;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid #dddfe2;
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Profile Details */
+.profile-details {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-details img {
+    border-radius: 50%;
+    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.profile-details h2 {
+    margin: 10px 0;
+    color: #333;
+}
+
+.profile-details p {
+    color: #666;
+}
+
 /* Friend Suggestions */
 .friend-suggestion {
     display: flex;
@@ -75,6 +173,11 @@
     color: #666;
 }
 
+.status-content {
+    margin-top: 10px;
+    color: #333;
+}
+
 .status-images img {
     width: 100%;
     max-width: 400px;
@@ -82,22 +185,8 @@
     margin-top: 10px;
 }
 
-/* Update button styles to be more visible */
-.button {
-    display: inline-block;
-    background-color: #4267B2;
-    color: #ffffff;
-    padding: 10px 20px;
-    margin-top: 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-align: center;
-}
-
-.button:hover {
-    background-color: #29487d;
-    text-decoration: none;
+.status-actions {
+    margin-top: 15px;
 }
 
 .status-actions a {
@@ -111,16 +200,67 @@
     color: #29487d;
 }
 
-/* Profile Details */
-.profile-details {
-    text-align: center;
+/* Forms */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
     margin-bottom: 30px;
 }
 
-.profile-details img {
-    border-radius: 50%;
-    margin-bottom: 20px;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
+form h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form .button {
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .friend-suggestion,
+    .status-message {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .friend-suggestion img.profile-thumb,
+    .status-header img.profile-thumb {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .friend-info,
+    .status-info {
+        align-items: flex-start;
+    }
+
+    .status-images img {
+        width: 100%;
+        max-width: 100%;
+    }
 }

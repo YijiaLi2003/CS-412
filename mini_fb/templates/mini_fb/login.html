@@ -1,0 +1,25 @@
+<!-- templates/mini_fb/login.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<main>
+    <h2>Login</h2>
+    {% if form.errors %}
+        <p style="color: red;">Invalid username or password.</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="username">Username:</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            {{ form.password }}
+        </div>
+        <input type="hidden" name="next" value="{% url 'show_all_profiles' %}">
+        <button type="submit" class="button">Login</button>
+    </form>
+</main>
+{% endblock %}

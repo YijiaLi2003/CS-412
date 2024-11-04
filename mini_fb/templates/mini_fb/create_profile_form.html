@@ -3,13 +3,19 @@
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
-<h2>Create a New Profile</h2>
+<main>
+    <h2>Create Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        <h3>User Registration</h3>
+        {{ user_form.non_field_errors }}
+        {{ user_form.as_p }}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Profile</button>
-</form>
+        <h3>Profile Information</h3>
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
 
-<a href="{% url 'show_all_profiles' %}">Back to Profiles</a>
+        <button type="submit" class="button">Create Profile</button>
+    </form>
+</main>
 {% endblock %}

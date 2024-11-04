@@ -11,12 +11,15 @@
         <p><strong>Email:</strong> {{ profile.email_address }}</p>
     </div>
 
-    <p>
-        <a href="{% url 'update_profile' profile.pk %}" class="button">Update Profile</a>
-        <a href="{% url 'friend_suggestions' profile.pk %}" class="button">Friend Suggestions</a>
-        <a href="{% url 'news_feed' profile.pk %}" class="button">News Feed</a>
-    </p>
+    {% if user.is_authenticated and profile.user == user %}
+        <p>
+            <a href="{% url 'update_profile' %}" class="button">Update Profile</a>
+            <a href="{% url 'friend_suggestions' %}" class="button">Friend Suggestions</a>
+            <a href="{% url 'news_feed' %}" class="button">News Feed</a>
+        </p>
+    {% endif %}
 
+    <!-- Friends Section -->
     <h3>Friends</h3>
     <ul>
         {% for friend in profile.get_friends %}
@@ -28,6 +31,7 @@
         {% endfor %}
     </ul>
 
+    <!-- Status Messages Section -->
     <h3>Status Messages</h3>
     {% for status in profile.status_messages.all %}
         <div class="status-message">
@@ -40,27 +44,31 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <div class="status-actions">
-                <a href="{% url 'update_status' status.pk %}">Update</a>
-                <a href="{% url 'delete_status' status.pk %}">Delete</a>
-            </div>
+            {% if user.is_authenticated and profile.user == user %}
+                <div class="status-actions">
+                    <a href="{% url 'update_status' status.pk %}">Update</a>
+                    <a href="{% url 'delete_status' status.pk %}">Delete</a>
+                </div>
+            {% endif %}
         </div>
     {% empty %}
         <p>No status messages.</p>
     {% endfor %}
 
-    <h3>Post a New Status Message</h3>
-    <form method="post" action="{% url 'create_status' profile.pk %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ status_form.as_p }}
-        <p>
-            <label>
-                Upload Image(s):
-                <input type="file" name="files" multiple>
-            </label>
-        </p>
-        <button type="submit" class="button">Post Status</button>
-    </form>
+    {% if user.is_authenticated and profile.user == user %}
+        <h3>Post a New Status Message</h3>
+        <form method="post" action="{% url 'create_status' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ status_form.as_p }}
+            <p>
+                <label>
+                    Upload Image(s):
+                    <input type="file" name="files" multiple>
+                </label>
+            </p>
+            <button type="submit" class="button">Post Status</button>
+        </form>
+    {% endif %}
 
     <a href="{% url 'show_all_profiles' %}" class="button">Back to Profiles</a>
 </main>

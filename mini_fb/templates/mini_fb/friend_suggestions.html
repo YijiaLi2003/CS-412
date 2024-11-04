@@ -6,17 +6,22 @@
 <main>
     <h2>Friend Suggestions for {{ profile.first_name }} {{ profile.last_name }}</h2>
 
-    {% for suggestion in suggestions %}
-    <div class="friend-suggestion">
-        <img src="{{ suggestion.profile_image_url }}" alt="{{ suggestion.first_name }}'s Profile Picture" class="profile-thumb">
-        <div class="friend-info">
-            <a href="{% url 'show_profile' suggestion.pk %}">{{ suggestion.first_name }} {{ suggestion.last_name }}</a>
-            <a href="{% url 'add_friend' profile.pk suggestion.pk %}" class="button">Add Friend</a>
-        </div>
-    </div>
-    {% empty %}
-        <p>No friend suggestions at this time.</p>
-    {% endfor %}
+    {% if user.is_authenticated and profile.user == user %}
+        {% for suggestion in suggestions %}
+            <div class="friend-suggestion">
+                <img src="{{ suggestion.profile_image_url }}" alt="{{ suggestion.first_name }}'s Profile Picture" class="profile-thumb">
+                <div class="friend-info">
+                    <a href="{% url 'show_profile' suggestion.pk %}">{{ suggestion.first_name }} {{ suggestion.last_name }}</a>
+                    <a href="{% url 'add_friend' suggestion.pk %}" class="button">Add Friend</a>
+
+                </div>
+            </div>
+        {% empty %}
+            <p>No friend suggestions at this time.</p>
+        {% endfor %}
+    {% else %}
+        <p>You do not have permission to view friend suggestions for this profile.</p>
+    {% endif %}
 
     <a href="{% url 'show_profile' profile.pk %}" class="button">Back to Profile</a>
 </main>
