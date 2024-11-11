@@ -1,0 +1,59 @@
+<!-- voter_analytics/templates/voter_analytics/graphs.html -->
+
+{% extends 'voter_analytics/base_generic.html' %}
+
+{% block content %}
+  <h1>Voter Analytics Graphs</h1>
+
+  <form method="get">
+    <label for="party_affiliation">Party Affiliation:</label>
+    <select name="party_affiliation" id="party_affiliation">
+      <option value="">All</option>
+      {% for party in party_list %}
+        <option value="{{ party }}" {% if selected_party_affiliation == party %}selected{% endif %}>{{ party }}</option>
+      {% endfor %}
+    </select>
+  
+    <label for="min_dob">Born After:</label>
+    <select name="min_dob" id="min_dob">
+      <option value="">Any</option>
+      {% for year in years %}
+        <option value="{{ year }}" {% if selected_min_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+      {% endfor %}
+    </select>
+  
+    <label for="max_dob">Born Before:</label>
+    <select name="max_dob" id="max_dob">
+      <option value="">Any</option>
+      {% for year in years %}
+        <option value="{{ year }}" {% if selected_max_dob == year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+      {% endfor %}
+    </select>
+  
+    <label for="voter_score">Voter Score:</label>
+    <select name="voter_score" id="voter_score">
+      <option value="">Any</option>
+      {% for score in voter_scores %}
+        <option value="{{ score }}" {% if selected_voter_score == score|stringformat:"s" %}selected{% endif %}>{{ score }}</option>
+      {% endfor %}
+    </select>
+  
+    <fieldset>
+      <legend>Voted In:</legend>
+      {% for election in elections %}
+        <label>
+          <input type="checkbox" name="voted_in" value="{{ election }}" {% if election in selected_voted_in %}checked{% endif %}>
+          {{ election }}
+        </label>
+      {% endfor %}
+    </fieldset>
+  
+    <button type="submit">Filter</button>
+  </form>
+  
+
+  {% for graph in graphs %}
+    {{ graph|safe }}
+  {% endfor %}
+
+{% endblock %}

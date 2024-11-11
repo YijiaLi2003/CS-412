@@ -1,0 +1,16 @@
+<!-- voter_analytics/templates/base_generic.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Voter Analytics{% endblock %}</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'voters' %}">Home</a>
+    <a href="{% url 'graphs' %}">Graphs</a>
+  </nav>
+  {% block content %}{% endblock %}
+</body>
+</html>
