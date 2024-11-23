@@ -1,0 +1,14 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>My Progress</h1>
+<ul class="list-group">
+    {% for entry in progress_entries %}
+        <li class="list-group-item">
+            <a href="{% url 'gaming:progress-detail' entry.pk %}">{{ entry.game.title }}</a> - {{ entry.completion_status }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">You have no progress entries.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

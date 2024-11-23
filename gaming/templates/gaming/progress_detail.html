@@ -1,0 +1,11 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>Progress for {{ progress_entry.game.title }}</h1>
+<p><strong>Status:</strong> {{ progress_entry.completion_status }}</p>
+<p><strong>Hours Played:</strong> {{ progress_entry.hours_played }}</p>
+<p><strong>Achievements:</strong> {{ progress_entry.achievements }}</p>
+<p><strong>Rating:</strong> {{ progress_entry.rating }}</p>
+<p><strong>Notes:</strong> {{ progress_entry.notes }}</p>
+<a href="{% url 'gaming:game-detail' progress_entry.game.pk %}" class="btn btn-secondary">Back to Game</a>
+{% endblock %}

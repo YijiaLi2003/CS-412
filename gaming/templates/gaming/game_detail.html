@@ -1,0 +1,26 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>{{ game.title }}</h1>
+<p><strong>Platform:</strong> {{ game.platform }}</p>
+<p><strong>Genre:</strong> <a href="{% url 'gaming:genre-detail' game.genre.pk %}">{{ game.genre.name }}</a></p>
+<p><strong>Release Date:</strong> {{ game.release_date }}</p>
+<p><strong>Developer:</strong> {{ game.developer }}</p>
+<p><strong>Publisher:</strong> {{ game.publisher }}</p>
+
+{% if user.is_authenticated %}
+    <h2>My Progress</h2>
+    {% with user_progress=game.progress_entries.filter(user=user).first %}
+        {% if user_progress %}
+            <p><strong>Status:</strong> {{ user_progress.completion_status }}</p>
+            <p><strong>Hours Played:</strong> {{ user_progress.hours_played }}</p>
+            <p><strong>Achievements:</strong> {{ user_progress.achievements }}</p>
+            <p><strong>Rating:</strong> {{ user_progress.rating }}</p>
+            <p><strong>Notes:</strong> {{ user_progress.notes }}</p>
+            <a href="{% url 'gaming:progress-detail' user_progress.pk %}" class="btn btn-primary">View Details</a>
+        {% else %}
+            <p>You have not started tracking this game yet.</p>
+        {% endif %}
+    {% endwith %}
+{% endif %}
+{% endblock %}

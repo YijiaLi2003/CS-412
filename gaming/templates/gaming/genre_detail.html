@@ -1,0 +1,14 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>{{ genre.name }} Games</h1>
+<ul class="list-group">
+    {% for game in genre.games.all %}
+        <li class="list-group-item">
+            <a href="{% url 'gaming:game-detail' game.pk %}">{{ game.title }}</a> - {{ game.platform }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">No games found in this genre.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

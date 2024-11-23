@@ -1,0 +1,12 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>Genres</h1>
+<ul class="list-group">
+    {% for genre in genres %}
+        <li class="list-group-item">
+            <a href="{% url 'gaming:genre-detail' genre.pk %}">{{ genre.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
