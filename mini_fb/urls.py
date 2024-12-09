@@ -15,6 +15,7 @@ from .views import (
     ShowNewsFeedView,
 )
 
+app_name = 'mini_fb'
 
 urlpatterns = [
     path('', ShowAllProfilesView.as_view(), name='show_all_profiles'),

@@ -1,0 +1,47 @@
+<!-- gaming/templates/gaming/profile_detail.html -->
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+<img src="{{ profile.profile_image.url }}" alt="Profile Image" width="150">
+
+<p>City: {{ profile.city }}</p>
+<p>Email: {{ profile.email_address }}</p>
+
+<h2>Friends</h2>
+<ul>
+    {% for friend in friends %}
+        <li>{{ friend.first_name }} {{ friend.last_name }}</li>
+    {% empty %}
+        <li>No friends yet.</li>
+    {% endfor %}
+</ul>
+
+<h2>Post a Status Update</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ status_form.as_p }}
+    <label for="id_images">Upload Images:</label>
+    <input type="file" name="images" multiple>
+    <button type="submit">Post</button>
+</form>
+
+<h2>News Feed</h2>
+<ul>
+    {% for status in profile.get_news_feed %}
+        <li>
+            <strong>{{ status.profile.first_name }} {{ status.profile.last_name }}</strong> - {{ status.timestamp }}
+            <p>{{ status.message }}</p>
+            {% if status.get_images %}
+                <div>
+                    {% for image in status.get_images %}
+                        <img src="{{ image.image_file.url }}" alt="Status Image" width="100">
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No status updates yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

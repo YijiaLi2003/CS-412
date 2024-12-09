@@ -25,9 +25,9 @@ urlpatterns = [
                                      ## and associate it with URLs in another file
     path("quotes/", include("quotes.urls")),
     path("restaurant/", include('restaurant.urls')),
-    path("mini_fb/", include('mini_fb.urls')),
     path("voter_analytics/", include('voter_analytics.urls')),
-    path("gaming/", include('gaming.urls')),
+    path('gaming/', include('gaming.urls', namespace='gaming')),
+    path('mini_fb/', include('mini_fb.urls', namespace='mini_fb')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

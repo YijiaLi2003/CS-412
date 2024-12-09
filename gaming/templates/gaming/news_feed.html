@@ -1,0 +1,23 @@
+<!-- gaming/templates/gaming/news_feed.html -->
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h2>Your News Feed</h2>
+<ul>
+    {% for status in news_feed %}
+        <li>
+            <strong>{{ status.profile.first_name }} {{ status.profile.last_name }}</strong> - {{ status.timestamp }}
+            <p>{{ status.message }}</p>
+            {% if status.get_images %}
+                <div>
+                    {% for image in status.get_images %}
+                        <img src="{{ image.image_file.url }}" alt="Status Image" width="100">
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No activity to show.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

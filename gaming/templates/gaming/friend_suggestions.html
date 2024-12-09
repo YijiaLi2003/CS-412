@@ -1,0 +1,19 @@
+<!-- gaming/templates/gaming/friend_suggestions.html -->
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+<h2>Friend Suggestions</h2>
+<ul>
+    {% for suggestion in suggestions %}
+        <li>
+            {{ suggestion.first_name }} {{ suggestion.last_name }}
+            <form method="post" action="{% url 'gaming:add-friend' suggestion.pk %}">
+                {% csrf_token %}
+                <button type="submit">Add Friend</button>
+            </form>
+        </li>
+    {% empty %}
+        <li>No friend suggestions available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'gaming/base.html' %}
+
+{% block content %}
+  <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+  <p><strong>City:</strong> {{ profile.city }}</p>
+  <p><strong>Email:</strong> {{ profile.email_address }}</p>
+  {% if profile.profile_image_url %}
+    <img src="{{ profile.profile_image_url }}" alt="{{ profile.first_name }}'s profile image" width="150">
+  {% endif %}
+
+  {% if user != profile.user %}
+    {% if user.profile in profile.get_friends %}
+      <p>You are friends.</p>
+    {% else %}
+      <a href="{% url 'gaming:add_friend' profile.pk %}">Add Friend</a>
+    {% endif %}
+  {% endif %}
+
+  <h3>Progress Entries</h3>
+  <ul>
+    {% for progress in progress_entries %}
+      <li>
+        <a href="{% url 'gaming:progress-detail' progress.pk %}">{{ progress.game.title }}</a>
+        - {{ progress.completion_status }}
+      </li>
+    {% empty %}
+      <li>No progress entries.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

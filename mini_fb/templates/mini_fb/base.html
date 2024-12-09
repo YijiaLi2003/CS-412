@@ -11,17 +11,17 @@
     <header>
         <h1>Welcome to Mini Facebook</h1>
         <nav>
-            <a href="{% url 'show_all_profiles' %}">Profiles</a>
+            <a href="{% url 'mini_fb:show_all_profiles' %}">Profiles</a>
             {% if user.is_authenticated %}
                 {% if user.profile and user.profile.pk %}
-                    | <a href="{% url 'show_profile' user.profile.pk %}">My Profile</a>
+                    | <a href="{% url 'mini_fb:show_profile' user.profile.pk %}">My Profile</a>
                 {% else %}
-                    | <a href="{% url 'create_profile' %}">Create Profile</a>
+                    | <a href="{% url 'mini_fb:create_profile' %}">Create Profile</a>
                 {% endif %}
-                | <a href="{% url 'logout' %}">Logout</a>
+                | <a href="{% url 'mini_fb:logout' %}">Logout</a>
             {% else %}
-                | <a href="{% url 'login' %}">Login</a>
-                | <a href="{% url 'create_profile' %}">Register</a>
+                | <a href="{% url 'mini_fb:login' %}">Login</a>
+                | <a href="{% url 'mini_fb:create_profile' %}">Register</a>
             {% endif %}
         </nav>
     </header>
