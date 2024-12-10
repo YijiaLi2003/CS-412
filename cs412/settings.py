@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.humanize',
     "hw",
     "quotes",
     'restaurant', 
@@ -136,8 +137,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Redirect to gaming game list after login
-LOGIN_REDIRECT_URL = 'gaming:game-list'
-
+LOGIN_REDIRECT_URL = 'gaming:summary'
 
 
 

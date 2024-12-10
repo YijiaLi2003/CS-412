@@ -7,6 +7,8 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-..." crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Optional: Include your custom CSS here -->
     <style>
         /* Custom styles can go here */
@@ -19,7 +21,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'gaming:game-list' %}">Gaming Tracker</a>
+            <a class="navbar-brand" href="{% url 'gaming:summary' %}">Gaming Tracker</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,12 +31,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side of Navbar -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item {% if request.resolver_match.url_name == 'genre-list' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'gaming:genre-list' %}">Genres</a>
-                    </li>
-                    <li class="nav-item {% if request.resolver_match.url_name == 'game-list' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'gaming:game-list' %}">Games</a>
-                    </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item {% if request.resolver_match.url_name == 'progress-list' %}active{% endif %}">
                             <a class="nav-link" href="{% url 'gaming:progress-list' %}">My Progress</a>

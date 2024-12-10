@@ -1,0 +1,8 @@
+<!-- gaming/templates/gaming/partials/edit_progress_form.html -->
+<form method="post" action="{% url 'gaming:progress-update' progress_entry.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- Hidden field to indicate sharing intention -->
+    <input type="hidden" name="share_to_feed" value="true">
+    <button type="submit" class="btn btn-success">Update and Share Progress</button>
+</form>

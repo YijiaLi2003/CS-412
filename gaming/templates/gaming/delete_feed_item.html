@@ -1,0 +1,10 @@
+{% extends 'gaming/base.html' %}
+{% block content %}
+<h1>Delete Feed Item</h1>
+<p>Are you sure you want to delete this feed item?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'gaming:news-feed' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!-- gaming/templates/gaming/progress_update.html -->
+
+{% extends 'gaming/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="mb-4">Edit Progress for "{{ form.instance.game.title }}"</h1>
+
+<form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    {{ form.game }}  <!-- Hidden field -->
+
+    <div class="mb-3">
+        <label for="id_platform" class="form-label">Platform</label>
+        {{ form.platform }}
+        {{ form.platform.errors }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_completion_status" class="form-label">Completion Status</label>
+        {{ form.completion_status }}
+        {{ form.completion_status.errors }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_hours_played" class="form-label">Hours Played</label>
+        {{ form.hours_played }}
+        {{ form.hours_played.errors }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_achievements" class="form-label">Achievements</label>
+        {{ form.achievements }}
+        {{ form.achievements.errors }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_rating" class="form-label">Rating</label>
+        {{ form.rating }}
+        {{ form.rating.errors }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_notes" class="form-label">Notes</label>
+        {{ form.notes }}
+        {{ form.notes.errors }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{% url 'gaming:progress-detail' form.instance.pk %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+<!-- Optional JavaScript for Bootstrap validation -->
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict'
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+</script>
+{% endblock %}

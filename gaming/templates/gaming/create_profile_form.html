@@ -1,12 +1,18 @@
 <!-- gaming/templates/gaming/create_profile_form.html -->
-{% extends 'gaming/base.html' %}
+{% extends "gaming/base.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Create Your Profile</h2>
+<h2>Create Profile</h2>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <h4>User Information</h4>
     {{ user_form.as_p }}
-    <button type="submit">Create Profile</button>
+    
+    <h4>Profile Information</h4>
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-primary">Create Profile</button>
 </form>
 {% endblock %}

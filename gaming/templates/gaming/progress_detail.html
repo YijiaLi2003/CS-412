@@ -1,11 +1,25 @@
 {% extends 'gaming/base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>Progress for {{ progress_entry.game.title }}</h1>
-<p><strong>Status:</strong> {{ progress_entry.completion_status }}</p>
-<p><strong>Hours Played:</strong> {{ progress_entry.hours_played }}</p>
-<p><strong>Achievements:</strong> {{ progress_entry.achievements }}</p>
-<p><strong>Rating:</strong> {{ progress_entry.rating }}</p>
-<p><strong>Notes:</strong> {{ progress_entry.notes }}</p>
-<a href="{% url 'gaming:game-detail' progress_entry.game.pk %}" class="btn btn-secondary">Back to Game</a>
+<h1 class="mb-4">Progress for {{ progress_entry.game.title }}</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Status:</strong> {{ progress_entry.completion_status }}</p>
+        <p><strong>Hours Played:</strong> {{ progress_entry.hours_played }}</p>
+        <p><strong>Achievements:</strong> {{ progress_entry.achievements }}</p>
+        <p><strong>Rating:</strong> {{ progress_entry.rating }}</p>
+        <p><strong>Platform:</strong> {{ progress_entry.platform.name }}</p>
+        <p><strong>Notes:</strong> {{ progress_entry.notes }}</p>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between">
+    <a href="{% url 'gaming:progress-list' %}" class="btn btn-secondary">Back to My Progress</a>
+    <a href="{% url 'gaming:progress-update' progress_entry.pk %}" class="btn btn-primary">
+        <i class="bi bi-pencil-square"></i> Edit Progress
+    </a>
+</div>
+
 {% endblock %}

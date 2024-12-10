@@ -1,0 +1,85 @@
+<!-- gaming/templates/gaming/progress_create.html -->
+
+{% extends 'gaming/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if game %}
+        <h1 class="mb-4">Add Progress for "{{ game.title }}"</h1>
+    {% else %}
+        <h1 class="mb-4">Add Progress</h1>
+    {% endif %}
+
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <!-- Hidden Game Field -->
+        {{ form.game }}
+        
+        <div class="mb-3">
+            <label for="id_platform" class="form-label">Platform</label>
+            {{ form.platform }}
+            {{ form.platform.errors }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_completion_status" class="form-label">Completion Status</label>
+            {{ form.completion_status }}
+            {{ form.completion_status.errors }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_hours_played" class="form-label">Hours Played</label>
+            {{ form.hours_played }}
+            {{ form.hours_played.errors }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_achievements" class="form-label">Achievements</label>
+            {{ form.achievements }}
+            {{ form.achievements.errors }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_rating" class="form-label">Rating</label>
+            {{ form.rating }}
+            {{ form.rating.errors }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_notes" class="form-label">Notes</label>
+            {{ form.notes }}
+            {{ form.notes.errors }}
+        </div>
+        
+        <button type="submit" class="btn btn-success">Add Progress</button>
+        <a href="{% url 'gaming:progress-add' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+    
+    {% if not game %}
+        <hr>
+        <h3>Or <a href="{% url 'gaming:game-create' %}" class="btn btn-outline-primary">
+            <i class="bi bi-plus-circle"></i> Create New Game and Add Progress
+        </a></h3>
+    {% endif %}
+
+    <!-- Optional JavaScript for Bootstrap validation -->
+    <script>
+        // Bootstrap validation script
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+{% endblock %}

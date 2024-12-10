@@ -1,14 +1,53 @@
+<!-- gaming/templates/gaming/progress_list.html -->
+
 {% extends 'gaming/base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>My Progress</h1>
-<ul class="list-group">
-    {% for entry in progress_entries %}
-        <li class="list-group-item">
-            <a href="{% url 'gaming:progress-detail' entry.pk %}">{{ entry.game.title }}</a> - {{ entry.completion_status }}
-        </li>
-    {% empty %}
-        <li class="list-group-item">You have no progress entries.</li>
-    {% endfor %}
-</ul>
+<h1 class="mb-4">My Progress</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <p class="text-muted">
+        Below are your progress entries, sorted by completion status.
+    </p>
+    <a href="{% url 'gaming:progress-add' %}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Add Game to My Progress
+    </a>
+</div>
+
+{% if progress_entries %}
+    <div class="accordion" id="progressAccordion">
+        {% regroup progress_entries by completion_status as grouped_entries %}
+        {% for group in grouped_entries %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ forloop.counter }}">
+                        {{ group.grouper }}
+                    </button>
+                </h2>
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#progressAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            {% for entry in group.list %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{% url 'gaming:progress-detail' entry.pk %}" class="text-decoration-none">
+                                            <strong>{{ entry.game.title }}</strong>
+                                        </a>
+                                        <span class="badge bg-info text-dark ms-2">{{ entry.platform.name }}</span>
+                                    </div>
+                                    <span class="text-muted">{{ entry.hours_played }} hrs</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning" role="alert">
+        You have no progress entries.
+    </div>
+{% endif %}
 {% endblock %}

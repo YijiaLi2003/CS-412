@@ -1,23 +1,240 @@
 <!-- gaming/templates/gaming/news_feed.html -->
 {% extends 'gaming/base.html' %}
+{% load static %}
+{% load humanize %}  <!-- Optional: for human-friendly numbers -->
 
 {% block content %}
 <h2>Your News Feed</h2>
-<ul>
-    {% for status in news_feed %}
-        <li>
-            <strong>{{ status.profile.first_name }} {{ status.profile.last_name }}</strong> - {{ status.timestamp }}
-            <p>{{ status.message }}</p>
-            {% if status.get_images %}
-                <div>
-                    {% for image in status.get_images %}
-                        <img src="{{ image.image_file.url }}" alt="Status Image" width="100">
+
+<!-- Toggle Buttons -->
+<div class="mb-4">
+    <!-- Button to Toggle Status Message Form -->
+    <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#statusMessageForm" aria-expanded="false" aria-controls="statusMessageForm">
+        Post a Status Message
+    </button>
+
+    <!-- Button to Toggle Share Progress Form -->
+    {% if user_progress.exists %}
+        <button class="btn btn-success mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#shareProgressForm" aria-expanded="false" aria-controls="shareProgressForm">
+            Share Your Game Progress
+        </button>
+    {% else %}
+        <button class="btn btn-success mb-2" type="button" disabled>
+            Share Your Game Progress (No Entries)
+        </button>
+    {% endif %}
+</div>
+
+<!-- Status Message Form (Initially Collapsed) -->
+<div class="collapse mb-4" id="statusMessageForm">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">What's on your mind?</h5>
+            <form method="post" enctype="multipart/form-data" action="{% url 'gaming:create-status-message' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Share Progress Form (Initially Collapsed) -->
+<div class="collapse mb-4" id="shareProgressForm">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Share Your Game Progress</h5>
+            <!-- Option to Select Existing Progress Entry -->
+            <div class="mb-3">
+                <label for="progressSelect" class="form-label">Select Progress to Share:</label>
+                <select class="form-select" id="progressSelect">
+                    <option selected disabled>Choose an option</option>
+                    {% for progress in user_progress %}
+                        <option value="{{ progress.id }}">{{ progress.game.title }}</option>
+                    {% empty %}
+                        <option disabled>No progress entries found.</option>
                     {% endfor %}
+                </select>
+            </div>
+
+            <!-- Form to Edit Existing Progress (Initially Hidden) -->
+            <div class="collapse" id="editProgressForm">
+                <!-- This section will be dynamically populated using JavaScript -->
+                <!-- Placeholder for dynamic content -->
+                <div id="editProgressContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Display News Feed -->
+{% if news_feed %}
+    <div class="accordion" id="newsFeedAccordion">
+        {% for item in news_feed %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                        {{ item.user.gaming_profile.first_name }} {{ item.user.gaming_profile.last_name }} - {{ item.timestamp|naturaltime }}
+                    </button>
+                </h2>
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#newsFeedAccordion">
+                    <div class="accordion-body">
+                        {% if item.content_type.model == 'statusmessage' %}
+                            <!-- Render Status Message -->
+                            <p>{{ item.content_object.message }}</p>
+
+                            <!-- Display Images if any -->
+                            {% if item.content_object.images.all %}
+                                <div class="mb-3">
+                                    {% for image in item.content_object.images.all %}
+                                        <img src="{{ image.image_file.url }}" alt="Status Image" class="img-fluid mb-2" style="max-width: 200px;">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                        {% elif item.content_type.model == 'progress' %}
+                            <!-- Render Game Progress -->
+                            <p><strong>Game:</strong> {{ item.content_object.game.title }}</p>
+                            <p><strong>Platform:</strong> {{ item.content_object.platform.name }}</p>
+                            <p><strong>Completion Status:</strong> {{ item.content_object.get_completion_status_display }}</p>
+                            <p><strong>Hours Played:</strong> {{ item.content_object.hours_played|intcomma }}</p>
+                            <p><strong>Achievements:</strong> {{ item.content_object.achievements|intcomma }}</p>
+                            {% if item.content_object.rating %}
+                                <p><strong>Rating:</strong> {{ item.content_object.rating }} / 5</p>
+                            {% endif %}
+                            {% if item.content_object.notes %}
+                                <p><strong>Notes:</strong> {{ item.content_object.notes }}</p>
+                            {% endif %}
+                        {% endif %}
+
+                        <!-- Like Button and Count -->
+                        <div class="mb-2">
+                            <form method="post" action="{% url 'gaming:toggle-like' %}" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="feed_item_id" value="{{ item.id }}">
+                                
+                                {% if item.content_object.user_liked %}
+                                    <button type="submit" class="btn btn-sm btn-danger">Unlike</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Like</button>
+                                {% endif %}
+                                
+                                <span>{{ item.content_object.likes.count }} Like{{ item.content_object.likes.count|pluralize }}</span>
+                            </form>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="mb-3">
+                            <h6>Comments ({{ item.content_object.comments.count }})</h6>
+                            {% for comment in item.content_object.comments.all %}
+                                <div class="mb-2">
+                                    <strong>{{ comment.profile.first_name }} {{ comment.profile.last_name }}</strong> <small class="text-muted">{{ comment.timestamp|naturaltime }}</small>
+                                    <p>{{ comment.content }}</p>
+                                </div>
+                            {% empty %}
+                                <p>No comments yet.</p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Add Comment Form -->
+                        <div>
+                            <form method="post" action="{% url 'gaming:create-comment' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="feed_item_id" value="{{ item.id }}">
+                                {{ comment_form.as_p }}
+                                <button type="submit" class="btn btn-sm btn-primary">Comment</button>
+                            </form>
+                        </div>
+
+                        <!-- Options to Edit or Delete (if the user is the owner) -->
+                        {% if item.content_object.user == user %}
+                            <hr>
+                            <a href="{% url 'gaming:update-feed-item' item.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="{% url 'gaming:delete-feed-item' item.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        {% elif item.content_object.profile and item.content_object.profile.user == user %}
+                            <hr>
+                            <a href="{% url 'gaming:update-feed-item' item.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="{% url 'gaming:delete-feed-item' item.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No activity to show.</p>
+{% endif %}
+
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if news_feed.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ news_feed.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </span>
+            </li>
+        {% endif %}
+        
+        {% for num in news_feed.paginator.page_range %}
+            {% if news_feed.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
             {% endif %}
-        </li>
-    {% empty %}
-        <li>No activity to show.</li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+        
+        {% if news_feed.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ news_feed.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- JavaScript to Handle Progress Selection -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const progressSelect = document.getElementById('progressSelect');
+        const editForm = document.getElementById('editProgressForm');
+        const editProgressContent = document.getElementById('editProgressContent');
+
+        progressSelect.addEventListener('change', function() {
+            const selectedValue = this.value;
+            if (selectedValue) {
+                // Show Edit Progress Form
+                editForm.classList.add('show');
+                // Fetch the progress data via AJAX
+                fetch(`/gaming/progress/${selectedValue}/edit_form/`)
+                    .then(response => response.text())
+                    .then(html => {
+                        editProgressContent.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching edit form:', error);
+                        editProgressContent.innerHTML = '<p>Error loading form.</p>';
+                    });
+            } else {
+                // If no selection, hide edit form
+                editForm.classList.remove('show');
+                editProgressContent.innerHTML = '';
+            }
+        });
+    });
+</script>
+
 {% endblock %}

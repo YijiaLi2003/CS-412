@@ -1,19 +1,57 @@
-<!-- gaming/templates/gaming/friend_suggestions.html -->
 {% extends 'gaming/base.html' %}
+{% load static %}
 
 {% block content %}
 <h2>Friend Suggestions</h2>
-<ul>
+<p>
+    These suggestions are based on shared gaming interests. We looked at the games you play, 
+    the genres you enjoy, and how you rate your games, then found people who share these interests.
+</p>
+
+<ul class="list-group">
     {% for suggestion in suggestions %}
-        <li>
-            {{ suggestion.first_name }} {{ suggestion.last_name }}
-            <form method="post" action="{% url 'gaming:add-friend' suggestion.pk %}">
+        <li class="list-group-item" style="margin-bottom: 20px;">
+            <h5>{{ suggestion.first_name }} {{ suggestion.last_name }}</h5>
+
+            <p>
+                {% if suggestion.details.genres %}
+                    <div style="margin-bottom: 10px;">
+                        <img src="{% static 'images/genre_icon.jpg' %}" alt="Genre Icon" width="20" style="vertical-align: middle; margin-right: 5px;">
+                        <span>They enjoy these genres you like:</span> 
+                        <br>
+                        <strong>{{ suggestion.details.genres|join:", " }}</strong>
+                    </div>
+                {% endif %}
+
+                {% if suggestion.details.ratings %}
+                    <div style="margin-bottom: 10px;">
+                        <img src="{% static 'images/rating_icon.png' %}" alt="Rating Icon" width="20" style="vertical-align: middle; margin-right: 5px;">
+                        <span>They rated the following games the same as you:</span>
+                        <br>
+                        <ul style="list-style: none; padding-left: 0;">
+                            {% for match in suggestion.details.ratings %}
+                                <li>
+                                    <strong>{{ match.game.title }}</strong> with a rating of {{ match.rating }}/5
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if not suggestion.details.genres and not suggestion.details.ratings %}
+                    <span>No detailed matches found, but they share some gaming interests with you!</span>
+                {% endif %}
+            </p>
+
+            <form method="post" action="{% url 'gaming:add-friend' suggestion.pk %}" style="margin-top: 10px;">
                 {% csrf_token %}
-                <button type="submit">Add Friend</button>
+                <button type="submit" class="btn btn-primary">Add Friend</button>
             </form>
         </li>
     {% empty %}
-        <li>No friend suggestions available.</li>
+        <li class="list-group-item">
+            No friend suggestions available at the moment.
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

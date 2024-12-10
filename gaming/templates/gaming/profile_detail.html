@@ -17,31 +17,5 @@
     {% endfor %}
 </ul>
 
-<h2>Post a Status Update</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ status_form.as_p }}
-    <label for="id_images">Upload Images:</label>
-    <input type="file" name="images" multiple>
-    <button type="submit">Post</button>
-</form>
 
-<h2>News Feed</h2>
-<ul>
-    {% for status in profile.get_news_feed %}
-        <li>
-            <strong>{{ status.profile.first_name }} {{ status.profile.last_name }}</strong> - {{ status.timestamp }}
-            <p>{{ status.message }}</p>
-            {% if status.get_images %}
-                <div>
-                    {% for image in status.get_images %}
-                        <img src="{{ image.image_file.url }}" alt="Status Image" width="100">
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>No status updates yet.</li>
-    {% endfor %}
-</ul>
 {% endblock %}
