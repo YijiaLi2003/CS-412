@@ -37,7 +37,6 @@
                     <strong>{{ g.title }}</strong><br>
                     <small>{{ g.genre.name }} - {{ g.release_date|date:"Y" }}</small>
                 </div>
-                <!-- Button to add this game to progress -->
                 <a href="{% url 'gaming:progress-create' %}?game={{ g.pk }}" class="btn btn-sm btn-primary">Add this Game</a>
             </li>
         {% endfor %}

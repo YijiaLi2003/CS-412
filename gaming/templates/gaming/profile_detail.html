@@ -1,21 +1,39 @@
-<!-- gaming/templates/gaming/profile_detail.html -->
 {% extends 'gaming/base.html' %}
 
 {% block content %}
-<h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
-<img src="{{ profile.profile_image.url }}" alt="Profile Image" width="150">
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Profile Information -->
+            <div class="d-flex align-items-center">
+                <img src="{{ profile.profile_image.url }}" alt="Profile Image" class="rounded-circle me-4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div>
+                    <h1 class="card-title">{{ profile.first_name }} {{ profile.last_name }}</h1>
+                    <p class="text-muted mb-0"><i class="bi bi-geo-alt"></i> City: {{ profile.city }}</p>
+                    <p class="text-muted"><i class="bi bi-envelope"></i> Email: {{ profile.email_address }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<p>City: {{ profile.city }}</p>
-<p>Email: {{ profile.email_address }}</p>
-
-<h2>Friends</h2>
-<ul>
-    {% for friend in friends %}
-        <li>{{ friend.first_name }} {{ friend.last_name }}</li>
-    {% empty %}
-        <li>No friends yet.</li>
-    {% endfor %}
-</ul>
-
-
+    <!-- Friends Section -->
+    <div class="mt-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title mb-0">Friends</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for friend in friends %}
+                        <li class="list-group-item">
+                            <i class="bi bi-person"></i> {{ friend.first_name }} {{ friend.last_name }}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item text-muted">No friends yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

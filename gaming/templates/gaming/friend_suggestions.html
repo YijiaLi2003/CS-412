@@ -4,8 +4,7 @@
 {% block content %}
 <h2>Friend Suggestions</h2>
 <p>
-    These suggestions are based on shared gaming interests. We looked at the games you play, 
-    the genres you enjoy, and how you rate your games, then found people who share these interests.
+    These suggestions are based on shared gaming interests. 
 </p>
 
 <ul class="list-group">
@@ -16,8 +15,7 @@
             <p>
                 {% if suggestion.details.genres %}
                     <div style="margin-bottom: 10px;">
-                        <img src="{% static 'images/genre_icon.jpg' %}" alt="Genre Icon" width="20" style="vertical-align: middle; margin-right: 5px;">
-                        <span>They enjoy these genres you like:</span> 
+                        <span>enjoys these genres you like:</span> 
                         <br>
                         <strong>{{ suggestion.details.genres|join:", " }}</strong>
                     </div>
@@ -25,8 +23,7 @@
 
                 {% if suggestion.details.ratings %}
                     <div style="margin-bottom: 10px;">
-                        <img src="{% static 'images/rating_icon.png' %}" alt="Rating Icon" width="20" style="vertical-align: middle; margin-right: 5px;">
-                        <span>They rated the following games the same as you:</span>
+                        <span>rated the following games the same as you:</span>
                         <br>
                         <ul style="list-style: none; padding-left: 0;">
                             {% for match in suggestion.details.ratings %}

@@ -10,7 +10,7 @@
     {% csrf_token %}
     {{ form.non_field_errors }}
     
-    {{ form.game }}  <!-- Hidden field -->
+    {{ form.game }}  
 
     <div class="mb-3">
         <label for="id_platform" class="form-label">Platform</label>
@@ -52,14 +52,10 @@
     <a href="{% url 'gaming:progress-detail' form.instance.pk %}" class="btn btn-secondary">Cancel</a>
 </form>
 
-<!-- Optional JavaScript for Bootstrap validation -->
 <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
       'use strict'
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.querySelectorAll('.needs-validation')
-      // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
         .forEach(function (form) {
           form.addEventListener('submit', function (event) {

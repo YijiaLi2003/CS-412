@@ -1,19 +1,17 @@
 <!-- gaming/templates/gaming/news_feed.html -->
 {% extends 'gaming/base.html' %}
 {% load static %}
-{% load humanize %}  <!-- Optional: for human-friendly numbers -->
+{% load humanize %} 
 
 {% block content %}
 <h2>Your News Feed</h2>
 
-<!-- Toggle Buttons -->
 <div class="mb-4">
-    <!-- Button to Toggle Status Message Form -->
+
     <button class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#statusMessageForm" aria-expanded="false" aria-controls="statusMessageForm">
         Post a Status Message
     </button>
 
-    <!-- Button to Toggle Share Progress Form -->
     {% if user_progress.exists %}
         <button class="btn btn-success mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#shareProgressForm" aria-expanded="false" aria-controls="shareProgressForm">
             Share Your Game Progress
@@ -25,7 +23,6 @@
     {% endif %}
 </div>
 
-<!-- Status Message Form (Initially Collapsed) -->
 <div class="collapse mb-4" id="statusMessageForm">
     <div class="card">
         <div class="card-body">
@@ -59,8 +56,6 @@
 
             <!-- Form to Edit Existing Progress (Initially Hidden) -->
             <div class="collapse" id="editProgressForm">
-                <!-- This section will be dynamically populated using JavaScript -->
-                <!-- Placeholder for dynamic content -->
                 <div id="editProgressContent"></div>
             </div>
         </div>
@@ -146,7 +141,6 @@
                             </form>
                         </div>
 
-                        <!-- Options to Edit or Delete (if the user is the owner) -->
                         {% if item.content_object.user == user %}
                             <hr>
                             <a href="{% url 'gaming:update-feed-item' item.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
@@ -216,9 +210,7 @@
         progressSelect.addEventListener('change', function() {
             const selectedValue = this.value;
             if (selectedValue) {
-                // Show Edit Progress Form
                 editForm.classList.add('show');
-                // Fetch the progress data via AJAX
                 fetch(`/gaming/progress/${selectedValue}/edit_form/`)
                     .then(response => response.text())
                     .then(html => {
@@ -229,7 +221,6 @@
                         editProgressContent.innerHTML = '<p>Error loading form.</p>';
                     });
             } else {
-                // If no selection, hide edit form
                 editForm.classList.remove('show');
                 editProgressContent.innerHTML = '';
             }

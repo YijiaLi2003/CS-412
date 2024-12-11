@@ -14,7 +14,6 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
         
-        <!-- Hidden Game Field -->
         {{ form.game }}
         
         <div class="mb-3">
@@ -64,9 +63,7 @@
         </a></h3>
     {% endif %}
 
-    <!-- Optional JavaScript for Bootstrap validation -->
     <script>
-        // Bootstrap validation script
         (function () {
             'use strict'
             var forms = document.querySelectorAll('.needs-validation')

@@ -4,7 +4,34 @@
 {% block content %}
 <div class="container my-5">
     <h2 class="mb-4 text-center">Friends' Progress</h2>
-    
+
+    <!-- Filter Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Filter Results</h5>
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="id_completion_status" class="form-label">Completion Status</label>
+                    {{ filter_form.completion_status }}
+                </div>
+                <div class="col-md-3">
+                    <label for="id_platform" class="form-label">Platform</label>
+                    {{ filter_form.platform }}
+                </div>
+                <div class="col-md-3">
+                    <label for="id_friend" class="form-label">Friend</label>
+                    {{ filter_form.friend }}
+                </div>
+                <div class="col-md-3 text-end">
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </form>
+            <div class="mt-2 text-end">
+                <a href="{% url 'gaming:friends-progress-list' %}" class="btn btn-secondary btn-sm">Reset</a>
+            </div>
+        </div>
+    </div>
+
     {% if progress_entries %}
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for entry in progress_entries %}
@@ -55,7 +82,7 @@
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <a class="page-link" href="?completion_status={{ filter_form.completion_status.value }}&platform={{ filter_form.platform.value }}&friend={{ filter_form.friend.value }}&page={{ page_obj.previous_page_number }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -71,13 +98,15 @@
                         {% if num == page_obj.number %}
                             <li class="page-item active"><span class="page-link">{{ num }}</span></li>
                         {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="?completion_status={{ filter_form.completion_status.value }}&platform={{ filter_form.platform.value }}&friend={{ filter_form.friend.value }}&page={{ num }}">{{ num }}</a>
+                            </li>
                         {% endif %}
                     {% endfor %}
                     
                     {% if page_obj.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <a class="page-link" href="?completion_status={{ filter_form.completion_status.value }}&platform={{ filter_form.platform.value }}&friend={{ filter_form.friend.value }}&page={{ page_obj.next_page_number }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
