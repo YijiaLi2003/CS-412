@@ -136,7 +136,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Redirect to gaming game list after login
 LOGIN_REDIRECT_URL = 'gaming:summary'
 
 
